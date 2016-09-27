@@ -15,6 +15,14 @@ This matrix is special, because it encodes the topology of the graph, and the we
 
 There are special constraints applied to this weight matrix that are detailed in Boyd's published article, as well as in my MSc Thesis.
 
+**About this work:** With Boyd's work, we can only approach networks that are represented by symmetric weight matrices, as this makes their treatment by convex optimization easy.
+
+With the work developed in this thesis, we have found and applied a series of convex approximations to the non-convex problem of minimizing the spectral radius for *asymetric* matrices.
+
+These techniques allowed the creation of a convex problem that shows good results when applied to asymetric matrices.
+
+The code in this repository is the same code I used to obtain my MSc Thesis results, under the section "Cool Down Algorithm".
+
 ##Requirements
 This project was built using:
 
@@ -23,3 +31,6 @@ This project was built using:
 
 2. CVX: Software for Disciplined Convex Programming - Version 2.1, Build 1107 (ad3582d)
   * (check this using the "cvx_version" command)
+
+##Contents
+-- Will write about this later --
