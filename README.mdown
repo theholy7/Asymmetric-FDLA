@@ -17,8 +17,9 @@ There are special constraints applied to this weight matrix that are detailed in
 
 ##Requirements
 This project was built using:
+
 1. Matlab - Version 8.5.0.197613 (R2015a)
-..* (check this using the "version" command)
+  * (check this using the "version" command)
 
 2. CVX: Software for Disciplined Convex Programming - Version 2.1, Build 1107 (ad3582d)
-..* (check this using the "cvx_version" command)
+  * (check this using the "cvx_version" command)
