@@ -1,0 +1,17 @@
+#Asymmetric FDLA Optimization
+##Introduction
+
+The work developed during my MSc Thesis aimed to optimize the performance of multiagent systems.
+
+A multiagent system is a network of sensors that is linked by a communitation network. What is special about these systems is that they don't have a central computer that gathers all information and then broadcasts a result.
+
+In this case, if we want to measure an average value, all sensors in the network have to cooperate and exchange messages, so that with an iterative algorithm they can reach an answer.
+
+This process is called Distributed Linear Averaging.
+
+To make sure we get to the answer as fast as possible, Boyd has published an article called Fastest Distributed Linear Averaging, that details the optimization problem to solve - the minimization os the spectral radius of the matrix that represents the network.
+
+This matrix is special, because it encodes the topology of the graph, and the weight each communication link has between two sensors.
+
+There are special constraints applied to this weight matrix that are detailed in Boyd's published article, as well as in my MSc Thesis.
+
