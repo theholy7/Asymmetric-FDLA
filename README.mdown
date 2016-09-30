@@ -1,4 +1,10 @@
 #Asymmetric FDLA Optimization
+
+##Information
+
+This work was done by Jose Antunes under the supervision of Prof. Joao Xavier at ISR - IST, University of Lisbon.
+
+
 ##Introduction
 
 The work developed during my MSc Thesis aimed to optimize the performance of multiagent systems.
