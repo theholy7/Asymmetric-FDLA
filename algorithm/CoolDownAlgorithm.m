@@ -19,6 +19,13 @@ switch choice
         error('Stopped by user');
 end
 
+% Is the input value a matrix? DIM > 1?
+if size(adjacencyMatrix) == 1
+    error('Not a matrix')
+end
+
+
+
 % Is the matrix square? Needs to be.
 % Dimension is nodes x nodes.
 % Entries are: "1" if node i connected to j, "0" if not.
@@ -267,6 +274,9 @@ for m = 1:20
         results(m+1) = wm.spectralRadius;
         %write that vector as a CSV file
         csvwrite('weightMatrixSpectralRadius.csv', results);
+        
+        %set output of fucntion
+        weightMatrix = wm;
         
         
         %traceResult = trace(Pmat*Qmat);
