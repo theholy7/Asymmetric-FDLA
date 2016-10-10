@@ -5,6 +5,7 @@ function [ weightMatrix ] = CoolDownAlgorithm( adjacencyMatrix )
 addpath('../requiredObjects/')
 addpath('../requiredFunctions/')
 
+
 %Inform user that previous files will be overritten
 % Construct a questdlg with three options
 choice = questdlg('Previous files will be overwritten. Proceed?', ...
@@ -63,7 +64,7 @@ eigenOne = ones(n, 1);
 
 % Here we begin the optimization of W - find W with the smallest maximum
 % singular value. We are now using the CVX package.
-
+tic
 % begin CVX environment
 cvx_begin quiet
 
@@ -177,10 +178,19 @@ Qmat = inv(Pmat);
 %this flag determines when to stop the program
 exitFlag = 0;
 
+global isAborted
 % Start iterations for the algorithm
 for m = 1:20
     % Start iterations for the P-Q optimization
     for l = 1:20
+        % check if stop button has been pressed
+        % isAborted = true?
+        pause(0.0001)
+        disp(isAborted)
+        
+        if isAborted
+            error('Aborted');
+        end
         
         % solve the problem of finding small variations to P and Q that
         % still respect the constraints on W
@@ -289,6 +299,7 @@ for m = 1:20
     end
     
 end
+
 
 end
 

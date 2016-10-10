@@ -22,7 +22,7 @@ function varargout = CoolDownGUI(varargin)
 
 % Edit the above text to modify the response to help CoolDownGUI
 
-% Last Modified by GUIDE v2.5 30-Sep-2016 13:24:01
+% Last Modified by GUIDE v2.5 03-Oct-2016 12:47:13
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -45,6 +45,8 @@ end
 
 addpath('../requiredObjects/')
 addpath('../requiredFunctions/')
+global isAborted
+isAborted = false;
 
 
 % --- Executes just before CoolDownGUI is made visible.
@@ -60,6 +62,8 @@ handles.output = hObject;
 
 % Update handles structure
 guidata(hObject, handles);
+global isAborted
+isAborted = false;
 
 % UIWAIT makes CoolDownGUI wait for user response (see UIRESUME)
 % uiwait(handles.figure1);
@@ -108,6 +112,7 @@ function updateButton_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 vars = evalin('base','who');
 set(handles.listbox1,'String',vars)
+set(handles.text4, 'String', 'Updated Variables!')
 
 
 % --- Executes on button press in runButton.
@@ -119,10 +124,15 @@ ListBoxCheck = get(handles.listbox1,'String');
 index_selected = get(handles.listbox1,'Value');
 item_selected = ListBoxCheck{index_selected};
 
-%evalin('base', item_selected)
-algorithmString = sprintf('CoolDownAlgorithm(%s)', item_selected)
-weightMatrix = evalin('base', algorithmString);
+global isAborted
+
+
+set(handles.text4, 'String', 'Running Algorithm')
+adjMatrix = evalin('base', item_selected);
+
+weightMatrix = CoolDownAlgorithm(adjMatrix);
 assignin('base', 'weightMatrixObj', weightMatrix)
+isAborted = false;
 
 
 % --- Executes on button press in stopButton.
@@ -130,3 +140,5 @@ function stopButton_Callback(hObject, eventdata, handles)
 % hObject    handle to stopButton (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
+global isAborted
+evalin('base', 'isAborted = true')

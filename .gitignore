@@ -6,3 +6,7 @@
 *.csv
 
 algorithm/jxAlgorithm.m
+
+algorithm/testAbort.m
+
+requiredFunctions/checkForAbort.m
