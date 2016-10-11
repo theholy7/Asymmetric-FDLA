@@ -1,10 +1,10 @@
-function [ weightMatrix ] = CoolDownAlgorithm( adjacencyMatrix )
+function [ weightMatrix ] = CoolDownAlgorithm( adjacencyMatrix)
 %UNTITLED Summary of this function goes here
 %   Detailed explanation goes here
 
 addpath('../requiredObjects/')
 addpath('../requiredFunctions/')
-
+global isAborted
 
 %Inform user that previous files will be overritten
 % Construct a questdlg with three options
@@ -178,7 +178,7 @@ Qmat = inv(Pmat);
 %this flag determines when to stop the program
 exitFlag = 0;
 
-global isAborted
+
 % Start iterations for the algorithm
 for m = 1:20
     % Start iterations for the P-Q optimization
@@ -186,10 +186,10 @@ for m = 1:20
         % check if stop button has been pressed
         % isAborted = true?
         pause(0.0001)
-        disp(isAborted)
+        %disp(isAborted)
         
         if isAborted
-            error('Aborted');
+            error('Aborted by User');
         end
         
         % solve the problem of finding small variations to P and Q that

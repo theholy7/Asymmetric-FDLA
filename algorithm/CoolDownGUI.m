@@ -45,8 +45,7 @@ end
 
 addpath('../requiredObjects/')
 addpath('../requiredFunctions/')
-global isAborted
-isAborted = false;
+
 
 
 % --- Executes just before CoolDownGUI is made visible.
@@ -78,6 +77,8 @@ function varargout = CoolDownGUI_OutputFcn(hObject, eventdata, handles)
 
 % Get default command line output from handles structure
 varargout{1} = handles.output;
+global isAborted
+isAborted = false;
 
 
 % --- Executes on selection change in listbox1.
@@ -126,7 +127,6 @@ item_selected = ListBoxCheck{index_selected};
 
 global isAborted
 
-
 set(handles.text4, 'String', 'Running Algorithm')
 adjMatrix = evalin('base', item_selected);
 
@@ -141,4 +141,6 @@ function stopButton_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 global isAborted
-evalin('base', 'isAborted = true')
+isAborted = true;
+
+
