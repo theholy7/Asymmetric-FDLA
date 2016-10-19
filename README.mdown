@@ -39,4 +39,15 @@ This project was built using:
   * (check this using the "cvx_version" command)
 
 ##Contents
--- Will write about this later --
+
+There are three folders inside this project.
+
+1. algorithm
+  * Contains all GUI matlab code and the algorithm that solves the Asymmetric FDLA problem.
+
+2. requiredFunctions
+  * Contains an additional function to verify if the graph is strongly connected.
+
+3. requiredObjects
+  * Contains two matlab objects to make it easier to work with graphs and weight matrices.
+
