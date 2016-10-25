@@ -51,3 +51,31 @@ There are three folders inside this project.
 3. requiredObjects
   * Contains two matlab objects to make it easier to work with graphs and weight matrices.
 
+##Instructions
+
+Both the script and GUI use as input variable an adjacency matrix representing a graph.
+
+You can find inside the script an example of one adjacency matrix. It is the same as the one shown here.
+
+w =
+
+     1     0     0     1     1     1     1     0     0     0
+     0     1     0     0     1     0     0     0     0     1
+     0     1     1     0     0     0     0     0     0     1
+     1     0     0     1     0     0     0     0     1     0
+     1     1     1     0     1     0     0     1     0     1
+     1     0     0     0     0     1     1     0     0     0
+     1     0     0     0     1     1     1     0     1     0
+     0     0     0     0     1     0     0     1     0     0
+     1     0     0     0     0     0     1     0     1     0
+     0     1     0     0     0     0     0     0     0     1
+
+This is the case of a directed graph with 10 nodes. Notice that all nodes consider the self-loop.
+
+To run the algorithm call:
+
+weightMatrix = CoolDownAlgorithm(w);
+
+or
+
+CoolDownGUI

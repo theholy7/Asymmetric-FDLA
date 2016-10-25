@@ -1,6 +1,22 @@
 function [ weightMatrix ] = CoolDownAlgorithm( adjacencyMatrix)
-%UNTITLED Summary of this function goes here
-%   Detailed explanation goes here
+%CoolDownAlgorithm Solves the Asymmetric FDLA optimization problem
+%   Input adjacency matrix like:
+% w =
+%
+%      1     0     0     1     1     1     1     0     0     0
+%      0     1     0     0     1     0     0     0     0     1
+%      0     1     1     0     0     0     0     0     0     1
+%      1     0     0     1     0     0     0     0     1     0
+%      1     1     1     0     1     0     0     1     0     1
+%      1     0     0     0     0     1     1     0     0     0
+%      1     0     0     0     1     1     1     0     1     0
+%      0     0     0     0     1     0     0     1     0     0
+%      1     0     0     0     0     0     1     0     1     0
+%      0     1     0     0     0     0     0     0     0     1
+%
+%   For the graph represented by this adjacency matrix, the algorithm finds
+%   the weight matrix that optimizes the communication weights between each
+%   node, thus solving the FDLA problem for asymmetric graphs.
 
 addpath('../requiredObjects/')
 addpath('../requiredFunctions/')
@@ -68,7 +84,7 @@ tic
 % begin CVX environment
 cvx_begin quiet
 
-% define matrix of variables 
+% define matrix of variables
 variable W(n,n)
 
 % define the problem: minimize maximum singluar value of W
@@ -187,11 +203,11 @@ for m = 1:20
         % isAborted = true?
         pause(0.0001)
         %disp(isAborted)
-        
+
         if isAborted
             error('Aborted by User');
         end
-        
+
         % solve the problem of finding small variations to P and Q that
         % still respect the constraints on W
         tic
@@ -201,59 +217,59 @@ for m = 1:20
         variable W(n,n)
         variable deltaP(n,n) symmetric
         variable deltaQ(n,n) symmetric
-        
+
         % minimize the trace of P*Q - the objective is a linearized version
         % of this
         minimize trace( (Pmat + deltaP)*Qmat + Pmat*(Qmat + deltaQ) )
-        
+
         subject to
-        
+
         %define the constraints on W and deltaP and deltaQ
         [ eta^2*(Pmat+deltaP) , (W-Jmat)';
             (W-Jmat), (Qmat+deltaQ) ] >= 0;
-        
+
         [ (Pmat + deltaP) , eye(n,n);
             eye(n,n), (Qmat + deltaQ) ] >= 0;
-        
+
         %define the constraints on W
         eigenOne'*W == eigenOne';
         W*eigenOne == eigenOne;
         W(~adjacencyMatrix)==0;
-        
+
         %end cvx and calculate
         cvx_end
-        
+
         % save the results as before, rounding to zero entreis smaller than
         % abs(10^-6)
         closeToZero = abs(W) <= 10^-6;
         W(closeToZero) = 0;
-        
+
         %save the weight matrix as a weightMatrixObj
         wm = WeightMatrix(W);
-        
+
         % again, print some information about the cvx status and program
         fprintf('P-Q Update status: %s \t Time: %d\n', cvx_status, toc);
-        
+
         Pmat = Pmat + deltaP;
         Qmat = Qmat + deltaQ;
-        
+
         % check if the problem was properly solved by CVX
         if strcmp(cvx_status, 'Solved') == 1 ...
                 || strcmp(cvx_status, 'Inaccurate/Solved') == 1
-            
+
             % set exit flag to zero - all is ok :)
             exitFlag = 0;
-            
+
             % Check if P-Q optimization has stabilized - meaning that the
             % frobenius norm of the matrices is varying less than 1pc per
             % iteration - if it has, break the P-Q optimization cycle
             if (norm(deltaP,'fro')/norm(Pmat, 'fro') <= 0.01 && ...
                     norm(deltaQ,'fro')/norm(Qmat, 'fro') <= 0.01)
-                
+
                 %break the P-Q optimization cycle
                 break
             end
-        
+
         % if the problem wasn't properly solved
         else
             % set exitFlag to 1 and break P-Q cycle
@@ -261,34 +277,34 @@ for m = 1:20
             break;
         end
     end
-    
+
     % Since exitFlag is now = 1 (if P-Q wasn't properly solved) exit the
     % program completely
     if exitFlag == 1
         % break outer for-loop
         break;
     end
-    
+
     % Everything was OK up to now - We have a matrix W that solves our
     % problem, it might not be the best yet, but it works
     % check if P and Q are OK and follow the constraints that we set :)
     % also check if the new spectral radius is lower than the previous
     if trace(Pmat*Qmat) <= n+1 && wm.spectralRadius <= results(m)
-        
+
         %save matrix of m iteration
         filename = sprintf('weightMatrixAtIteration_%d.mat',m);
-        
+
         %save(filename, 'wm');
-        
+
         %save results to results vector for easy plotting
         results(m+1) = wm.spectralRadius;
         %write that vector as a CSV file
         csvwrite('weightMatrixSpectralRadius.csv', results);
-        
+
         %set output of fucntion
         weightMatrix = wm;
-        
-        
+
+
         %traceResult = trace(Pmat*Qmat);
         %set a new goal for the spectral radius to be under
         eta = 0.95*eta;
@@ -297,9 +313,8 @@ for m = 1:20
     else
         break;
     end
-    
-end
-
 
 end
 
+
+end
