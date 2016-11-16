@@ -2,7 +2,7 @@ function [ weightMatrix ] = CoolDownAlgorithm( adjacencyMatrix)
 %CoolDownAlgorithm Solves the Asymmetric FDLA optimization problem
 %   Input adjacency matrix like:
 % w =
-%
+% 
 %      1     0     0     1     1     1     1     0     0     0
 %      0     1     0     0     1     0     0     0     0     1
 %      0     1     1     0     0     0     0     0     0     1
